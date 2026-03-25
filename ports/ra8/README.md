@@ -30,6 +30,7 @@ micropython/
 5. 生成与强制编译：
   - 点击右上角绿色的 Generate Project Content 生成基础代码。
   - 避坑指南：为了生成隐藏的 bsp_linker_info.h 文件，必须在工程名上右键点击 Clean Project (清理)，然后点击 Build Project (构建)。
+
 阶段三：核心文件的搬运
 这一步是移植的核心，我们将 e2studio 生成的代码文件注入到 MicroPython 的“灵魂”中。注意路径的绝对准确！
 1. 搬运 FSP 底层库 (至 lib 目录)
@@ -37,12 +38,13 @@ micropython/
 - ra/ (FSP 核心源码)
 - ra_cfg/ (FSP 宏配置)
 - ra_gen/ (引脚和外设的初始化代码)
-- 特种兵搜救：去 e2studio 工程的 Debug (或 Release) 文件夹中，找到刚刚通过小锤子编译生成的 bsp_linker_info.h（以及对应的 .c 如果有），手动扔进 lib/renesas_ra/ra_gen/ 目录下。
+- 特种兵搜救：去 e2studio 工程的 Debug (或 Release) 文件夹中，找到刚刚通过小锤子编译生成的 bsp_linker_info.h），手动扔进 lib/renesas_ra/ra_gen/ 目录下。
 2. 搬运链接脚本 (至 ports/ra8 目录)
 将 e2studio 工程 script/ 文件夹下的三个“内存地契”复制到 micropython/ports/ra8/ 目录下：
 - fsp.ld (总链接脚本)
 - fsp_gen.ld (自动生成的栈和堆配置)
 - memory_regions.ld (Flash 和 RAM 的物理地址分配)
+
 阶段四：源码修改
 文件就位后，需要打通 MicroPython 与 FSP 之间的经脉。
 1. 解决 main 函数冲突
@@ -62,6 +64,7 @@ R_SCI_B_UART_Open(&g_uart0_ctrl, &g_uart0_cfg); // 唤醒串口
   - 定义回调函数 void user_uart_callback(uart_callback_args_t *p_args) 捕获 RX 字符并设置标志位。
   - 在 mp_hal_stdin_rx_chr 中写一个 while 循环死等接收标志位。
   - 在 mp_hal_stdout_tx_strn 中使用 R_SCI_B_UART_Write 循环发送字符。
+ 
  阶段五：编译与烧录
 1. MSYS2 终端编译： 在 micropython/ports/ra8 目录下执行：
 make clean
@@ -69,9 +72,9 @@ make
 2. 格式转换 (ELF 转 HEX)： 编译生成的默认是 .elf 文件，为了方便 RFP 烧录，执行：
 arm-none-eabi-objcopy -O ihex build/firmware.elf build/firmware.hex
 3. 烧录与测试：
-  1. 使用 Renesas Flash Programmer 将 firmware.hex 烧录至核心板。
-  2. 打开 MobaXterm，建立 Serial 连接，选择正确的 COM 口，波特率 115200。
-  3. 按下核心板上的 RESET 键，迎接 >>>。
+  a. 使用 Renesas Flash Programmer 将 firmware.hex 烧录至核心板。
+  b. 打开 MobaXterm，建立 Serial 连接，选择正确的 COM 口，波特率 115200。
+  c. 按下核心板上的 RESET 键，迎接 >>>。
 
 ---
 最终的目录结构（移植完成版）
@@ -103,6 +106,7 @@ micropython/
         ├── mphalport.h      
         └── qstrdefsport.h  
         ```
+
 对比初始结构：
 ```text
 micropython/
