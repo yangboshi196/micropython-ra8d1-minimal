@@ -4,7 +4,7 @@
 我们将 micropython/ports/minimal 整个文件夹复制了一份，并重命名为 micropython/ports/ra8。
 2. 初始的 minimal 目录结构（Before）
 此时的 ports/ra8 只是一个没有灵魂的骨架，它完全不知道底层硬件长什么样：
-'''
+'''text
 micropython/
 ├── ports/
 │   └── ra8/                 <-- 工程目录
@@ -76,7 +76,7 @@ arm-none-eabi-objcopy -O ihex build/firmware.elf build/firmware.hex
 ---
 最终的目录结构（移植完成版）
 移植成功后，工程结构将变成这样一个紧密耦合的形态：
-'''
+'''text
 Plaintext
 micropython/
 ├── lib/
@@ -104,7 +104,7 @@ micropython/
         └── qstrdefsport.h  
         '''
 对比初始结构：
-'''
+'''text
 micropython/
 ├── ports/
 │   └── ra8/                 <-- 你的工程目录
