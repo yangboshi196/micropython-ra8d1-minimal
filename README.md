@@ -1,3 +1,7 @@
+本仓库是基于官方 MicroPython 为 **瑞萨 RA8D1 (Cortex-M85)** 芯片制作的独立移植版本
+关于本移植版本的详细编译、烧录说明与目录结构，请直接前往查阅专属文档：
+[**点击查看 RA8D1 移植手册 (ports/ra8/README.md)**](ports/ra8/README.md)
+
 [![Unix CI badge](https://github.com/micropython/micropython/actions/workflows/ports_unix.yml/badge.svg)](https://github.com/micropython/micropython/actions?query=branch%3Amaster+event%3Apush) [![STM32 CI badge](https://github.com/micropython/micropython/actions/workflows/ports_stm32.yml/badge.svg)](https://github.com/micropython/micropython/actions?query=branch%3Amaster+event%3Apush) [![Docs CI badge](https://github.com/micropython/micropython/actions/workflows/docs.yml/badge.svg)](https://docs.micropython.org/) [![codecov](https://codecov.io/gh/micropython/micropython/branch/master/graph/badge.svg?token=I92PfD05sD)](https://codecov.io/gh/micropython/micropython)
 
 The MicroPython project
