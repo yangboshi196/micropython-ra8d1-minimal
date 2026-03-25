@@ -4,6 +4,7 @@
 我们将 micropython/ports/minimal 整个文件夹复制了一份，并重命名为 micropython/ports/ra8。
 2. 初始的 minimal 目录结构（Before）
 此时的 ports/ra8 只是一个没有灵魂的骨架，它完全不知道底层硬件长什么样：
+'''
 micropython/
 ├── ports/
 │   └── ra8/                 <-- 工程目录
@@ -15,7 +16,7 @@ micropython/
 │       └── qstrdefsport.h   (字符串常量定义)
 └── lib/                     <-- 官方放置各家芯片底层库的地方
     └── (此时还没有 renesas_ra 相关的文件夹)
-
+'''
 阶段二：底层驱动生成 (瑞萨 e2studio)
 因为 RA8D1 极其复杂，我们必须借助瑞萨官方的 FSP (Flexible Software Package) 工具来生成底层硬件初始化代码。
 1. 新建工程：在 e2studio 中创建一个名为 micropython_flat 的 FSP 工程（选择 RA8D1 芯片，Flat 模式，不带 RTOS）。
@@ -75,6 +76,7 @@ arm-none-eabi-objcopy -O ihex build/firmware.elf build/firmware.hex
 ---
 最终的目录结构（移植完成版）
 移植成功后，工程结构将变成这样一个紧密耦合的形态：
+'''
 Plaintext
 micropython/
 ├── lib/
@@ -100,7 +102,9 @@ micropython/
         ├── mpconfigport.h   <-- [待修改] 后续在这里开启 GC、MATH 等模块
         ├── mphalport.h      
         └── qstrdefsport.h  
+        '''
 对比初始结构：
+'''
 micropython/
 ├── ports/
 │   └── ra8/                 <-- 你的工程目录
@@ -112,4 +116,5 @@ micropython/
 │       └── qstrdefsport.h   (字符串常量定义)
 └── lib/                     <-- 官方放置各家芯片底层库的地方
     └── (此时还没有 renesas_ra 相关的文件夹)
+    '''
 这就是从零打造 RA8D1 MicroPython 运行环境的完整链路。现在的固件虽然叫 minimal，但由于已经打通了 FSP 的经脉，随时可以通过修改 mpconfigport.h 和引入 C 模块，把它变成全能的完全体！
