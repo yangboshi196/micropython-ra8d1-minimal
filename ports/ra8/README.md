@@ -118,3 +118,7 @@ micropython/
     └── (此时还没有 renesas_ra 相关的文件夹)
     '''
 这就是从零打造 RA8D1 MicroPython 运行环境的完整链路。现在的固件虽然叫 minimal，但由于已经打通了 FSP 的经脉，随时可以通过修改 mpconfigport.h 和引入 C 模块，把它变成全能的完全体！
+
+<img width="667" height="537" alt="image" src="https://github.com/user-attachments/assets/c2bcd6f7-2ff4-48a3-ac6c-17ca27889b89" />
+
+
